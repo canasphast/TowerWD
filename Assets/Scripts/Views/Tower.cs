@@ -3,17 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TowerState
+{
+    Idle,
+    Attack
+}
+
 public abstract class Tower : MonoBehaviour
 {
-    public TowerModel model { get; private set; }
+    protected CircleCollider2D theCC;
+    public TowerState state { get; protected set; }
+    //public TowerModel model { get; private set; }
     public TowerStat stat { get; private set; }
     public Transform target { get; protected set; }
-    public Cooldown attackCooldown { get; protected set; }
+    public Cooldown attackCooldown { get; protected set; } = new();
     private bool isStop;
-    public void Init(TowerModel _model, TowerStat _stat)
+
+    [SerializeField] protected Transform firePointPos;
+    [SerializeField] protected Bullet bulletPrefab;
+    public void Init(TowerStat _stat)
     {
-        model = _model;
+        //model = _model;
         stat = _stat;
+        theCC = GetComponent<CircleCollider2D>();
+        theCC.radius = stat.atkRange.Value;
     }
 
     private void Update()

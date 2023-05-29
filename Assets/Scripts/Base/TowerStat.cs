@@ -13,14 +13,25 @@ public class TowerStat
     public StatFloat ProjectileSpeed = new();
     public StatFloat ProjectileCount = new();
 
-    public TowerStat(int _level, int _exp, int _atk, float _atkRange, float _atkSpeed, float _PS, float _PC)
+    public TowerStat(int _atk, float _atkRange, float _atkSpeed, float _PS, float _PC)
     {
-        level.BaseValue = _level;
-        exp.BaseValue = _exp;
+        level.BaseValue = 1;
+        exp.BaseValue = 0;
         atk.BaseValue = _atk;
         atkRange.BaseValue = _atkRange;
         atkSpeed.BaseValue = _atkSpeed;
         ProjectileSpeed.BaseValue = _PS;
         ProjectileCount.BaseValue = _PC;
+    }
+
+    public TowerStat(int _atk, float _atkRange, float _atkSpeed)
+    {
+        level.BaseValue = 1;
+        exp.BaseValue = 0;
+        atk.BaseValue = _atk;
+        atkRange.BaseValue = _atkRange;
+        atkSpeed.BaseValue = _atkSpeed;
+        ProjectileSpeed.BaseValue = 5f;
+        ProjectileCount.BaseValue = 1f;
     }
 }
