@@ -1,18 +1,36 @@
-using System.Collections;
+using CanasSource;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        Singleton<GameController>.Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public List<Transform> mapPoints = new();
+    public List<Enemy> enemies = new();
+
+    public string SetIdForEnemy()
     {
-        
+        //chua viet
+        return "";
+    }
+
+    public void EnemyDie(Enemy enemy, bool isDestroyObject = true)
+    {
+        enemies.Remove(enemy);
+        if(isDestroyObject) Destroy(enemy.gameObject);
+    }
+
+    public Transform GetMapPoint(int index)
+    {
+        if (mapPoints.Count > index && index >= 0)
+        {
+            return mapPoints[index];
+            
+        }
+        return null;
     }
 }

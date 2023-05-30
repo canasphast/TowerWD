@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{63350DE4-BE2B-CF45-9CA2-3BA274E626DB}</ProjectGuid>
+    <ProjectGuid>{1C435C07-9FD3-EE3A-81A5-F8A55B46CEE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -57,22 +57,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Base\TowerStat.cs" />
-    <Compile Include="Assets\Scripts\Views\Bullet.cs" />
+    <Compile Include="Assets\Scripts\NguyenScript\GameController_Nguyen.cs" />
+    <Compile Include="Assets\Scripts\Base\Bullet.cs" />
     <Compile Include="Assets\Scripts\Models\TowerModel.cs" />
+<<<<<<< HEAD
+    <Compile Include="Assets\Scripts\Base\EnemyModel.cs" />
+=======
+>>>>>>> 7cbb4256b4f641716b097ab88a786f9a8a30732b
+    <Compile Include="Assets\Scripts\Views\TargetBullet.cs" />
     <Compile Include="Assets\Scripts\Views\BasicTower.cs" />
     <Compile Include="Assets\CanasScript\Stat.cs" />
+    <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
     <Compile Include="Assets\CanasScript\Singleton.cs" />
     <Compile Include="Assets\Scripts\Selection.cs" />
-    <Compile Include="Assets\Scripts\Views\Tower.cs" />
+    <Compile Include="Assets\Scripts\NguyenScript\Enemy_Nguyen.cs" />
+    <Compile Include="Assets\Scripts\NguyenScript\TowerBehavior_Nguyen.cs" />
+    <Compile Include="Assets\Scripts\Base\Tower.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\WaveController.cs" />
     <Compile Include="Assets\Scripts\TestSingleton.cs" />
     <Compile Include="Assets\CanasScript\Cooldown.cs" />
     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
+    <Compile Include="Assets\Scripts\NguyenScript\MoveByPath_Nguyen.cs" />
+    <Compile Include="Assets\Scripts\NguyenScript\Tower_Nguyen.cs" />
     <Compile Include="Assets\CanasScript\ObjectPool.cs" />
-    <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
-    <Compile Include="Assets\Scripts\Views\TargetBullet.cs" />
+<<<<<<< HEAD
+    <Compile Include="Assets\Scripts\Base\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Views\BasicEnemy.cs" />
+    <Compile Include="Assets\Scripts\DemoObserver.cs" />
+    <Compile Include="Assets\Scripts\Base\ConstFields.cs" />
+=======
     <Compile Include="Assets\Scripts\Views\Enemy.cs" />
+>>>>>>> 7cbb4256b4f641716b097ab88a786f9a8a30732b
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
