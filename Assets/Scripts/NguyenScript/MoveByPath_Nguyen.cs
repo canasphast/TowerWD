@@ -16,7 +16,7 @@ public class MoveByPath_Nguyen : MonoBehaviour
 
     private void Awake()
     {
-        SetStat();
+        //SetStat();
     }
 
 
@@ -68,9 +68,8 @@ public class MoveByPath_Nguyen : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
     }
     [SerializeField] Enemy enemy;
-    void SetStat()
+    /*void SetStat()
     {
-
         enemy = new Enemy();
-    }
+    }*/
 }

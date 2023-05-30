@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 
-public enum EnemyType
+/*public enum EnemyType
 {
     Tank,Archer,Melee,Wizard,Speeder
-}
+}*/
 
 public class Enemy_Nguyen : MonoBehaviour
 {

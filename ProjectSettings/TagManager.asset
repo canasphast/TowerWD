@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Selectable
   - Enemy
+  - Food
   layers:
   - Default
   - TransparentFX

@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class BasicTower : Tower
 {
-    public List<Transform> listEnemy = new();
-
     protected override void LogicUpdate(float deltaTime)
     {
         base.LogicUpdate(deltaTime);
@@ -32,7 +31,24 @@ public class BasicTower : Tower
     {
         if (target == null)
         {
-            target = GetFirstEnemy();
+            switch (typeTarget)
+            {
+                case TypeTargetTower.First:
+                    target = GetFirstEnemy();
+                    break;
+                case TypeTargetTower.Last:
+                    target = GetLastEnemy();
+                    break;
+                case TypeTargetTower.Strongest:
+                    target = GetStrongestEnemy();
+                    break;
+                case TypeTargetTower.Weakest:
+                    target = GetWeakestEnemy();
+                    break;
+                case TypeTargetTower.Random:
+                    target = GetRandomEnemy();
+                    break;
+            }
         }
         if (target != null)
         {
@@ -40,14 +56,7 @@ public class BasicTower : Tower
         }
     }
 
-    private Transform GetFirstEnemy()
-    {
-        if(listEnemy.Count != 0)
-        {
-            return listEnemy.Where(enemy => enemy != null).First();
-        }
-        return null;
-    }
+    
 
     private void UpdateAttack(float deltaTime)
     {

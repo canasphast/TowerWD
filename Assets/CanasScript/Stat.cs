@@ -10,7 +10,7 @@ namespace CanasSource
         Mul
     }
 
-    public abstract class StatModifier<T>
+    public class StatModifier<T>
     {
         public T value;
         public StatModifierType type;
@@ -21,6 +21,11 @@ namespace CanasSource
             this.value = value;
             this.type = type;
             this.source = source;
+        }
+
+        public StatModifier()
+        {
+            
         }
     }
 
