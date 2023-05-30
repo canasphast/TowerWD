@@ -59,8 +59,10 @@
     <Compile Include="Assets\Scripts\Base\TowerStat.cs" />
     <Compile Include="Assets\Scripts\Views\Bullet.cs" />
     <Compile Include="Assets\Scripts\Models\TowerModel.cs" />
+    <Compile Include="Assets\Scripts\Views\TargetBullet.cs" />
     <Compile Include="Assets\Scripts\Views\BasicTower.cs" />
     <Compile Include="Assets\CanasScript\Stat.cs" />
+    <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
     <Compile Include="Assets\CanasScript\Singleton.cs" />
     <Compile Include="Assets\Scripts\Selection.cs" />
     <Compile Include="Assets\Scripts\Views\Tower.cs" />
@@ -70,8 +72,6 @@
     <Compile Include="Assets\CanasScript\Cooldown.cs" />
     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
     <Compile Include="Assets\CanasScript\ObjectPool.cs" />
-    <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
-    <Compile Include="Assets\Scripts\Views\TargetBullet.cs" />
     <Compile Include="Assets\Scripts\Views\Enemy.cs" />
   </ItemGroup>
   <ItemGroup>
