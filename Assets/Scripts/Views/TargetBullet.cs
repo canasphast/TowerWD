@@ -45,7 +45,7 @@ public class TargetBullet : Bullet
     {
         if (target != null)
         {
-            targetPos = target.position;
+            targetPos = target.transform.position;
         }
         Vector3 direction = (targetPos - transform.position).normalized;
         transform.Translate(stat.moveSpeed.Value * Time.deltaTime * direction, Space.World);
@@ -82,11 +82,11 @@ public class TargetBullet : Bullet
 
     public void SpawnExplose(Vector3 position)
     {
-
+        
     }
 
     private void ExploseNormal()
     {
-        //target?.TakeDamage(stat.atk.Value);
+        target?.TakeDamage(stat.atk.Value);
     }
 }

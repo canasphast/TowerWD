@@ -66,7 +66,7 @@ public class BasicTower : Tower
             return;
         }
 
-        var distance = Vector3.Distance(transform.position, target.position);
+        var distance = Vector3.Distance(transform.position, target.transform.position);
         if (distance > stat.atkRange.Value)
         {
             state = TowerState.Idle;
@@ -99,7 +99,7 @@ public class BasicTower : Tower
     {
         if(collision.CompareTag("Enemy"))
         {
-            listEnemy.Add(collision.transform);
+            listEnemy.Add(collision.GetComponent<Enemy>());
         }
     }
 
@@ -107,7 +107,7 @@ public class BasicTower : Tower
     {
         if (collision.CompareTag("Enemy"))
         {
-            listEnemy.Remove(collision.transform);
+            listEnemy.Remove(collision.GetComponent<Enemy>());
         }
     }
 }

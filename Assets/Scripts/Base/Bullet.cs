@@ -45,13 +45,13 @@ public class BulletStat
 public abstract class Bullet : MonoBehaviour
 {
     public Tower owner { get; private set; }
-    public Transform target { get; private set; }
+    public Enemy target { get; private set; }
     public BulletStat stat { get; private set; }
     public BulletState state { get; protected set; }
 
     [SerializeField] protected BulletDirectionType bulletDirectionType;
 
-    public void Init(Tower _owner, BulletStat _stat, Transform _target)
+    public void Init(Tower _owner, BulletStat _stat, Enemy _target)
     {
         owner = _owner;
         target = _target;
