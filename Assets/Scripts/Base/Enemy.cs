@@ -37,7 +37,7 @@ public abstract class Enemy : MonoBehaviour
     protected Animator anim;
     protected Rigidbody2D theRB;
     public HealthBar healthBar { get ; protected set; }
-    public Transform target { get ; protected set; }
+    public Food target { get ; protected set; }
     public EnemyState state {  get; protected set; }
     public EnemyStat stat { get; private set; }
     public bool isAlive => stat.currentHP.Value > 0;
@@ -48,16 +48,12 @@ public abstract class Enemy : MonoBehaviour
     private bool isStop;
     protected bool isPicked;
 
-    private void Awake()
-    {
-        var testStat = new EnemyStat(700, 10, 1, 10);
-        Init(testStat);
-    }
-
     private void Start()
     {
         anim = GetComponent<Animator>();
         theRB = GetComponent<Rigidbody2D>();
+        var testStat = new EnemyStat(150, 10, 3, 10);
+        Init(testStat);
     }
 
     private void Update()
@@ -85,7 +81,7 @@ public abstract class Enemy : MonoBehaviour
     public void Init(EnemyStat enemyStat)
     {
         UpdateStat(enemyStat);
-        var healthBar = Instantiate(gameController.PF_Healthbar);
+        var healthBar = Instantiate(Singleton<GameController>.Instance.PF_Healthbar);
         healthBar.Init(this);
         this.healthBar = healthBar;
     }
@@ -99,6 +95,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (!isAlive) return;
         var lossHP = AddHp(-dmg);
+        Singleton<PoolDmgPoint>.Instance.GetObjectFromPool(transform.position, lossHP, false);
         healthBar.HpChanged();
         if (stat.currentHP.Value == 0)
         {
@@ -122,6 +119,11 @@ public abstract class Enemy : MonoBehaviour
         //anim?.SetTrigger("Die");
         PlayeSound(EnemyState.die);
         state = EnemyState.die;
+        if(target != null)
+        {
+            target.transform.SetParent(null);
+            target.isPicked = false;
+        }
         Singleton<GameController>.Instance.EnemyDie(this);
     }
 
@@ -142,9 +144,11 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(ConstFields.Food))
+        if (collision.TryGetComponent(out Food food)/*collision.CompareTag(ConstFields.Food)*/)
         {
-            target = collision.transform;
+            if(food.isPicked) return;
+            food.isPicked = true;
+            target = collision.GetComponent<Food>();
             //collision.transform.SetParent(transform);
         }
     }

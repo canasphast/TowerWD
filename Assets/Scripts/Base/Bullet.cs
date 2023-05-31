@@ -26,6 +26,7 @@ public enum BulletDirectionType
 
 public enum BulletExploseType
 {
+    target,
     single,
     aoe,
 }
@@ -50,6 +51,8 @@ public abstract class Bullet : MonoBehaviour
     public BulletState state { get; protected set; }
 
     [SerializeField] protected BulletDirectionType bulletDirectionType;
+    [SerializeField] protected BulletExploseType bulletExploseType;
+    [SerializeField] protected BulletType bulletType;
 
     public void Init(Tower _owner, BulletStat _stat, Enemy _target)
     {

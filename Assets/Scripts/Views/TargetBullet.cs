@@ -47,8 +47,8 @@ public class TargetBullet : Bullet
         {
             targetPos = target.transform.position;
         }
-        Vector3 direction = (targetPos - transform.position).normalized;
-        transform.Translate(stat.moveSpeed.Value * Time.deltaTime * direction, Space.World);
+        
+        Moving();
 
         if (bulletDirectionType == BulletDirectionType.lookAt)
         {
@@ -64,10 +64,26 @@ public class TargetBullet : Bullet
         }
     }
 
+    private void Moving()
+    {
+        Vector3 direction = (targetPos - transform.position).normalized;
+        transform.Translate(stat.moveSpeed.Value * Time.deltaTime * direction, Space.World);
+    }
+
     private void UpdateExplose(float deltaTime)
     {
-        ExploseNormal();
-        SpawnExplose(transform.position);
+        if(bulletExploseType == BulletExploseType.target)
+        {
+            ExploseTarget();
+        }
+        else if(bulletExploseType == BulletExploseType.single)
+        {
+            //ExploseSingle();
+        }
+        else if (bulletExploseType == BulletExploseType.aoe)
+        {
+            ExploseAoe(transform.position);
+        }
         despawnCooldown.Restart(0);
         state = BulletState.despawn;
     }
@@ -80,12 +96,17 @@ public class TargetBullet : Bullet
         Destroy(gameObject);
     }
 
-    public void SpawnExplose(Vector3 position)
+    public void ExploseAoe(Vector3 position)
     {
         
     }
 
-    private void ExploseNormal()
+    private void ExploseSingle(Enemy enemy)
+    {
+        enemy?.TakeDamage(stat.atk.Value);
+    }
+
+    private void ExploseTarget()
     {
         target?.TakeDamage(stat.atk.Value);
     }

@@ -2,14 +2,13 @@ using CanasSource;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ObjectPool : Singleton<ObjectPool>
+public abstract class ObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private int poolSize;
     [SerializeField] private bool expandable = true;
-
-    private List<GameObject> freeList;
-    private List<GameObject> usedList;
+    [SerializeField] private List<GameObject> freeList;
+    [SerializeField] private List<GameObject> usedList;
 
     protected virtual void Awake()
     {
@@ -55,7 +54,7 @@ public abstract class ObjectPool : Singleton<ObjectPool>
     private void GenerateNewObject()
     {
         GameObject game = Instantiate(prefab);
-        game.transform.SetParent(transform, false);
+        game.transform.SetParent(this.transform, false);
         game.SetActive(false);
         freeList.Add(game);
     }

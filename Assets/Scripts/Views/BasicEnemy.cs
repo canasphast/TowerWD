@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicEnemy : Enemy
@@ -43,8 +41,8 @@ public class BasicEnemy : Enemy
         }
         if(target != null)
         {
-            mapPoint = target;
-            if(Vector2.Distance(target.position, transform.position) < 0.1f)
+            mapPoint = target.transform;
+            if(Vector2.Distance(target.transform.position, transform.position) < 0.1f)
             {
                 state = EnemyState.moveBack;
                 target.transform.SetParent(transform);
