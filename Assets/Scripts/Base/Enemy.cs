@@ -36,7 +36,7 @@ public abstract class Enemy : MonoBehaviour
 {
     protected Animator anim;
     protected Rigidbody2D theRB;
-    //public HealthBar healthBar { get ; protected set; }
+    public HealthBar healthBar { get ; protected set; }
     public Transform target { get ; protected set; }
     public EnemyState state {  get; protected set; }
     public EnemyStat stat { get; private set; }
@@ -50,8 +50,8 @@ public abstract class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        var testStat = new EnemyStat(10, 10, 10, 10);
-        stat = testStat;
+        var testStat = new EnemyStat(700, 10, 1, 10);
+        Init(testStat);
     }
 
     private void Start()
@@ -82,21 +82,24 @@ public abstract class Enemy : MonoBehaviour
 
     }
 
-    public void Init()
+    public void Init(EnemyStat enemyStat)
     {
-        UpdateStat();
+        UpdateStat(enemyStat);
+        var healthBar = Instantiate(gameController.PF_Healthbar);
+        healthBar.Init(this);
+        this.healthBar = healthBar;
     }
 
-    private void UpdateStat()
+    private void UpdateStat(EnemyStat enemyStat)
     {
-
+        stat = enemyStat;
     }
 
     public void TakeDamage(int dmg)
     {
         if (!isAlive) return;
-
         var lossHP = AddHp(-dmg);
+        healthBar.HpChanged();
         if (stat.currentHP.Value == 0)
         {
             Die();
@@ -110,13 +113,13 @@ public abstract class Enemy : MonoBehaviour
         var remain = stat.currentHP.Value + amount;
         var newValue = Mathf.Clamp(remain, 0, stat.maxHP.Value);
         var oldValue = stat.currentHP.Value;
-        stat.currentHP.AddModifier(new StatModifier<int>(newValue, StatModifierType.Add, this));
+        stat.currentHP.BaseValue = newValue;
         return newValue - oldValue;
     }
 
     protected void Die()
     {
-        anim?.SetTrigger("Die");
+        //anim?.SetTrigger("Die");
         PlayeSound(EnemyState.die);
         state = EnemyState.die;
         Singleton<GameController>.Instance.EnemyDie(this);
@@ -141,7 +144,6 @@ public abstract class Enemy : MonoBehaviour
     {
         if (collision.CompareTag(ConstFields.Food))
         {
-            Debug.Log("Touched");
             target = collision.transform;
             //collision.transform.SetParent(transform);
         }

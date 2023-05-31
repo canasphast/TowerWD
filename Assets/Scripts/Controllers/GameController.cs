@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour
     public List<Transform> mapPoints = new();
     public List<Enemy> enemies = new();
 
+    public GameObject Parent_HealthBar;
+    public HealthBar PF_Healthbar;
+
     public string SetIdForEnemy()
     {
         //chua viet

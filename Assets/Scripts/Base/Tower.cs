@@ -1,5 +1,4 @@
 using CanasSource;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -26,10 +25,10 @@ public abstract class Tower : MonoBehaviour
     public TypeTargetTower typeTarget;
     //public TowerModel model { get; private set; }
     public TowerStat stat { get; private set; }
-    public Transform target { get; protected set; }
+    public Enemy target { get; protected set; }
     public Cooldown attackCooldown { get; protected set; } = new();
     private bool isStop;
-    public List<Transform> listEnemy = new();
+    public List<Enemy> listEnemy = new();
 
 
     [SerializeField] protected Transform firePointPos;
@@ -64,7 +63,7 @@ public abstract class Tower : MonoBehaviour
 
     }
 
-    protected Transform GetFirstEnemy()
+    protected Enemy GetFirstEnemy()
     {
         if (listEnemy.Count != 0)
         {
@@ -73,22 +72,29 @@ public abstract class Tower : MonoBehaviour
         return null;
     }
 
-    protected Transform GetLastEnemy()
+    protected Enemy GetLastEnemy()
     {
         return null;
     }
 
-    protected Transform GetStrongestEnemy()
+    protected Enemy GetStrongestEnemy()
+    {
+        {
+            if (listEnemy.Count != 0)
+            {
+                var max = listEnemy.Max(e => e.stat.currentHP.Value);
+                return listEnemy.Where(e => e.stat.currentHP.Value == max).First();
+            }
+            return null;
+        }
+    }
+
+    protected Enemy GetWeakestEnemy()
     {
         return null;
     }
 
-    protected Transform GetWeakestEnemy()
-    {
-        return null;
-    }
-
-    protected Transform GetRandomEnemy()
+    protected Enemy GetRandomEnemy()
     {
         return null;
     }
