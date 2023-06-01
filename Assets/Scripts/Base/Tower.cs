@@ -74,6 +74,10 @@ public abstract class Tower : MonoBehaviour
 
     protected Enemy GetLastEnemy()
     {
+        if (listEnemy.Count != 0)
+        {
+            return listEnemy.Where(enemy => enemy != null).Last();
+        }
         return null;
     }
 
@@ -91,11 +95,21 @@ public abstract class Tower : MonoBehaviour
 
     protected Enemy GetWeakestEnemy()
     {
+        if (listEnemy.Count != 0)
+        {
+            var min = listEnemy.Min(e => e.stat.currentHP.Value);
+            return listEnemy.Where(e => e.stat.currentHP.Value == min).First();
+        }
         return null;
     }
 
     protected Enemy GetRandomEnemy()
     {
+        var randomIndex = Random.Range(0, listEnemy.Count);
+        if (listEnemy[randomIndex]!= null)
+        {
+            return (Enemy)listEnemy[randomIndex];
+        }
         return null;
     }
 }
