@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour
 
     public GameController gameController => Singleton<GameController>.Instance;
 
-    private bool isStop;
+    private bool isStop = true;
     protected bool isPicked;
 
     private void Start()

@@ -31,7 +31,7 @@ public class TowerStat
         atk.BaseValue = _atk;
         atkRange.BaseValue = _atkRange;
         atkSpeed.BaseValue = _atkSpeed;
-        ProjectileSpeed.BaseValue = 5f;
+        ProjectileSpeed.BaseValue = 10f;
         ProjectileCount.BaseValue = 1f;
     }
 }

@@ -2,81 +2,73 @@ using UnityEngine;
 
 public class Selection : MonoBehaviour
 {
-    /*public Color highlightColor;
-    public Color selectionColor;
+    [SerializeField] private LayerMask layerSelection;
 
-    private Color originalColor;
+    Vector2 mousePos;
+    Ray ray;
+    RaycastHit2D hit;
+
     private Transform highlight;
+    private SpriteRenderer theSR_highlight => highlight.GetComponent<SpriteRenderer>();
     private Transform selection;
-    private RaycastHit raycastHit;
-
-    private void Update()
-    {*/
-    /*if (highlight != null)
+    private SpriteRenderer theSR_selection => selection.GetComponent<SpriteRenderer>();
+    [SerializeField] private Color highlightColor;
+    [SerializeField] private Color selectionColor;
+    private Color originalColor;
+    void Update()
     {
-        highlight.GetComponent<SpriteRenderer>().color = originalColor;
-        highlight = null;
-    }*/
+        mousePos = Input.mousePosition;
+        ray = Camera.main.ScreenPointToRay(mousePos);
+        Debug.DrawRay(ray.origin, ray.direction * 500f, Color.white);
+        hit = Physics2D.Raycast(ray.origin, Vector2.zero);
+        Touched();
+        Clicked();
+    }
 
-    /*Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    Debug.Log(worldMousePosition);*/
-    /*if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
+    private void Touched()
     {
-        highlight = raycastHit.transform;
-        if (highlight.CompareTag("Selectable") && highlight != selection)
+        if (highlight != null)
         {
-            if (highlight.GetComponent<SpriteRenderer>().color != highlightColor)
-            {
-                originalColor = highlight.GetComponent<SpriteRenderer>().color;
-                highlight.GetComponent<SpriteRenderer>().color = highlightColor;
-            }
-        }
-        else
-        {
+            theSR_highlight.color = originalColor;
             highlight = null;
         }
-    }*/
-    /*if (Input.GetKey(KeyCode.Mouse0))
-    {
-        if (selection != null)
+
+        if (hit && hit.transform.gameObject.layer == 29)
         {
-            selection.GetComponent<SpriteRenderer>().color = originalColor;
-            selection = null;
-        }
-        Debug.Log("1: " + raycastHit);
-        if (Physics.Raycast(ray, out raycastHit))
-        {
-            Debug.Log("2: " + raycastHit.transform.name);
-            selection = raycastHit.transform;
-            if (selection.CompareTag("Selectable"))
+            highlight = hit.transform;
+            if (highlight != selection)
+            {   
+                if (theSR_highlight.color != highlightColor)
+                {
+                    originalColor = theSR_highlight.color;
+                    theSR_highlight.color = highlightColor;
+                }
+            }
+            else
             {
-                selection.GetComponent<SpriteRenderer>().color = selectionColor;
+                highlight = null;
+            }
+        }
+    }
+
+    private void Clicked()
+    {
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            if (selection != null)
+            {
+                theSR_selection.color = originalColor;
+                selection = null;
+            }
+            selection = hit.transform;
+            if (hit && hit.transform.gameObject.layer == 29)
+            {
+                theSR_selection.color = selectionColor;
             }
             else
             {
                 selection = null;
             }
         }
-    }*/
-    //}
-
-    public Ray ray;
-    public RaycastHit hit;
-    public Vector2 mousePos;
-    // Update is called once per frame
-    void Update()
-    {
-        mousePos = Input.mousePosition;
-        ray = Camera.main.ScreenPointToRay(mousePos);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, Vector2.zero);
-        if (hit)
-        {
-            //Debug.Log(hit.transform.name);
-        }
-        else
-        {
-            //Debug.Log("nothing");
-        }
-
     }
 }
