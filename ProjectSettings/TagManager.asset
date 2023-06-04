@@ -36,10 +36,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Food
+  - Node
+  - Tower
+  - Enemy
   m_SortingLayers:
   - name: Default
     uniqueID: 0

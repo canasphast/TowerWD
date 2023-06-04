@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5132987929887116919}
   - component: {fileID: 5132987929887116918}
+  - component: {fileID: 1333626604}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -49,3 +50,22 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   enemies: []
+  Parent_HealthBar: {fileID: 0}
+  PF_Healthbar: {fileID: 8723464160637101884, guid: 00e0da7a72b2d9a4fa769cf2c020ded0, type: 3}
+--- !u!114 &1333626604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5132987929887116905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc3d941d9d2824db74d97fe45e0c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerSelection:
+    serializedVersion: 2
+    m_Bits: 268435456
+  highlightColor: {r: 1, g: 0.43867922, b: 0.43867922, a: 1}
+  selectionColor: {r: 1, g: 0.3160377, b: 0.73164725, a: 1}
