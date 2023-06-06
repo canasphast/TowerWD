@@ -2,16 +2,16 @@ using CanasSource;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public enum EnemyState
 {
-    idle,
-    moveTo,
-    moveBack,
-    skill,
-    die
+    Idle,
+    Move,
+    Skill,
+    Die
 }
 
 public class EnemyStat
@@ -39,20 +39,23 @@ public abstract class Enemy : MonoBehaviour
     public HealthBar healthBar { get ; protected set; }
     public Transform target { get ; protected set; }
     public EnemyState state {  get; protected set; }
+    public EnemyModel model { get; protected set; }
     public EnemyStat stat { get; private set; }
     public bool isAlive => stat.currentHP.Value > 0;
     public bool isFullHp => stat.currentHP.Value >= stat.maxHP.Value;
-
     public GameController gameController => Singleton<GameController>.Instance;
 
-    private bool isStop;
+    public int pathPoint;
+    protected int index;
+
+    public bool isStop;
+  
     protected bool isPicked;
 
-    private void Awake()
-    {
-        var testStat = new EnemyStat(700, 10, 1, 10);
-        Init(testStat);
-    }
+    public List<Effect> negativeEffect = new();
+    public List<Effect> positiveEffect = new();
+
+    #region Base Method
 
     private void Start()
     {
@@ -74,25 +77,26 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void LogicUpdate(float deltaTime)
     {
-        
+        UpdateEffect(deltaTime);
     }
 
     protected virtual void PhysicUpdate(float deltaTime)
     {
 
     }
+    #endregion
 
-    public void Init(EnemyStat enemyStat)
+    public void Init(int pathPoint , EnemyModel model, HealthBar hpView)
     {
-        UpdateStat(enemyStat);
-        var healthBar = Instantiate(gameController.PF_Healthbar);
-        healthBar.Init(this);
-        this.healthBar = healthBar;
+        this.pathPoint = pathPoint;
+        this.model = model;
+        this.healthBar = hpView;
+        UpdateStat();
     }
 
-    private void UpdateStat(EnemyStat enemyStat)
+    private void UpdateStat()
     {
-        stat = enemyStat;
+        stat = new EnemyStat(model.MaxHp, model.Armor, model.MoveSpeed, model.Coin);
     }
 
     public void TakeDamage(int dmg)
@@ -120,8 +124,8 @@ public abstract class Enemy : MonoBehaviour
     protected void Die()
     {
         //anim?.SetTrigger("Die");
-        PlayeSound(EnemyState.die);
-        state = EnemyState.die;
+        PlayeSound(EnemyState.Die);
+        state = EnemyState.Die;
         Singleton<GameController>.Instance.EnemyDie(this);
     }
 
@@ -140,10 +144,44 @@ public abstract class Enemy : MonoBehaviour
 
     }
 
+    public void AddEffect(bool isNegative, Effect effect)
+    {
+        if(isNegative)
+        {
+            negativeEffect.Add(effect);
+        }
+        else
+        {
+            positiveEffect.Add(effect);
+        }
+    }
+
+    private void UpdateEffect(float deltaTime)
+    {
+        for (int i = 0; i < positiveEffect.Count; i++)
+        {
+            positiveEffect[i].Interact(deltaTime);
+            if (positiveEffect[i].coolDownTime.isFinished)
+            {
+                positiveEffect.Remove(positiveEffect[i]);
+            }
+        }
+
+        for (int i = 0; i < negativeEffect.Count; i++)
+        {
+            negativeEffect[i].Interact(deltaTime);
+            if (negativeEffect[i].coolDownTime.isFinished)
+            {
+                negativeEffect.Remove(negativeEffect[i]);
+            }
+        }
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(ConstFields.Food))
+        if (collision.TryGetComponent(out Food food) && !food.isPicked)
         {
+            food.isPicked = true;
             target = collision.transform;
             //collision.transform.SetParent(transform);
         }

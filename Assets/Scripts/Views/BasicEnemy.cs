@@ -4,75 +4,56 @@ using UnityEngine;
 
 public class BasicEnemy : Enemy
 {
-    private int index;
-
     protected override void LogicUpdate(float deltaTime)
     {
         base.LogicUpdate(deltaTime);
         if (!isAlive) return;
         switch(state)
         {
-            case EnemyState.idle:
+            case EnemyState.Idle:
                 UpdateIdle(deltaTime);
                 break;
-            case EnemyState.moveTo:
-                UpdateMoveTo(deltaTime);
+            case EnemyState.Move:
+                UpdateMove(deltaTime);
                 break;
-            case EnemyState.moveBack:
-                UpdateMoveBack(deltaTime);
-                break;
-            case EnemyState.skill:
+            case EnemyState.Skill:
                 UpdateSkill(deltaTime);
                 break;
-
         }
     }
 
     private void UpdateIdle(float deltaTime)
     {
-        state = EnemyState.moveTo;
+        state = EnemyState.Move;
     }
 
-    private void UpdateMoveTo(float deltaTime)
+    private void UpdateMove(float deltaTime)
     {
-        var mapPoint = gameController.GetMapPoint(index);
-        if(mapPoint == null)
-        {
-            theRB.velocity = Vector2.zero;
-            return;
-        }
-        if(target != null)
-        {
-            mapPoint = target;
-            if(Vector2.Distance(target.position, transform.position) < 0.1f)
-            {
-                state = EnemyState.moveBack;
-                target.transform.SetParent(transform);
-                index--;
-                return;
-            }
-        }
-        Moving(mapPoint);
-        if (Vector2.Distance(mapPoint.position, transform.position) < 0.1f)
-        {
-            index++;
-        }
-        //if touching Food
-        //state = EnemyState.moveBack;
-    }
-
-    private void UpdateMoveBack(float deltaTime)
-    {
-        var mapPoint = gameController.GetMapPoint(index);
+        var mapPoint = gameController.GetMapPoint(pathPoint, index);
         if (mapPoint == null)
         {
             theRB.velocity = Vector2.zero;
             return;
         }
+        if (!isPicked)
+        {
+            if (target != null)
+            {
+                mapPoint = target;
+                if (Vector2.Distance(target.position, transform.position) < 0.1f)
+                {
+                    isPicked = true;
+                    target.transform.SetParent(transform);
+                    index--;
+                    return;
+                }
+            }
+
+        }
         Moving(mapPoint);
         if (Vector2.Distance(mapPoint.position, transform.position) < 0.1f)
         {
-            index--;
+            _ = !isPicked ? index++ : index--;
         }
     }
 

@@ -56,7 +56,9 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Views\Node.cs" />
     <Compile Include="Assets\Scripts\Base\TowerStat.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Selection.cs" />
     <Compile Include="Assets\Scripts\NguyenScript\GameController_Nguyen.cs" />
     <Compile Include="Assets\Scripts\Base\Bullet.cs" />
     <Compile Include="Assets\Scripts\Models\TowerModel.cs" />
@@ -70,7 +72,7 @@
     <Compile Include="Assets\Scripts\Base\Food.cs" />
     <Compile Include="Assets\Scripts\NguyenScript\TowerBehavior_Nguyen.cs" />
     <Compile Include="Assets\Scripts\Base\Tower.cs" />
-    <Compile Include="Assets\Scripts\Node.cs" />
+    <Compile Include="Assets\Scripts\Base\Effect.cs" />
     <Compile Include="Assets\Scripts\WaveController.cs" />
     <Compile Include="Assets\Scripts\TestSingleton.cs" />
     <Compile Include="Assets\CanasScript\Cooldown.cs" />
@@ -83,7 +85,6 @@
     <Compile Include="Assets\Scripts\Views\BasicEnemy.cs" />
     <Compile Include="Assets\Scripts\DemoObserver.cs" />
     <Compile Include="Assets\Scripts\Base\ConstFields.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Selection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
